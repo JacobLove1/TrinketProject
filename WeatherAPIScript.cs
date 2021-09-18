@@ -1,15 +1,24 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.Audio;
 using TMPro;
+using System;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class WeatherAPIScript : MonoBehaviour
 {
+    
     public GameObject weatherTextObject;
-        // add your personal API key after APPID= and before &units=
-       string url = "http://api.openweathermap.org/data/2.5/weather?lat=28.57&lon=80.65&APPID=c4b78713b2a9ae0630dffe7ad7a52620&units=imperial";
-       string urlPyramid = "http://api.openweathermap.org/data/2.5/weather?lat=20.40&lon=8&APPID=c4b78713b2a9ae0630dffe7ad7a52620&units=imperial";
-       
+    public UnityEvent ButtonEvents;
+    public Button myButton;
+    // add your personal API key after APPID= and before &units=
+    string url = "http://api.openweathermap.org/data/2.5/weather?lat=28.57&lon=80.65&APPID=c4b78713b2a9ae0630dffe7ad7a52620&units=imperial";
+    string urlPyramid = "http://api.openweathermap.org/data/2.5/weather?lat=20.40&lon=8&APPID=c4b78713b2a9ae0630dffe7ad7a52620&units=imperial";
+    
+
 
 
     void Start()
@@ -64,7 +73,12 @@ public class WeatherAPIScript : MonoBehaviour
                 /*double isRain = float.Parse(webRequest.downloadHandler.text.Substring(endRain - 4, (endRain)));*/
 
                 //Debug.Log(conditions);
+                if (FullText.Contains("rain"))
+                    {
+                    Button btn = myButton.GetComponent<Button>();
+                    btn.onClick.Invoke();
 
+                }
                 weatherTextObject.GetComponent<TextMeshPro>().text = "" + easyTempF.ToString() + "°F\n" + conditions;
             }
         }
